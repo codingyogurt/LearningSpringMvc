@@ -73,7 +73,7 @@ Note: first create folder WEB_INF
 ```
 # Snippets for Spring MVC Setup
 
-### The dispatcher (front controller)
+### Spring MVC dispatcher (front controller)
 
 File: pom.xml, under dependencies
 For: to add the Spring framework dependency. 
@@ -120,4 +120,92 @@ For: create and link the dispatcher servlet class to the dispatcher.xml. Also to
 	        <url-pattern>/ryan-mvc/*</url-pattern>
 	    </servlet-mapping>
 ```
+### Spring MVC Controllers
 
+File: IndexLoginController.java
+For: Will be annotated as a Spring Controller. Will be included in the controllers the dispatcher will automatically look on.
+```java
+package com.codingyogurt;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class IndexLoginController {
+	@RequestMapping(value="/bukasan") // if this is found in the url with the created mapping /ryan-mvc/ map will be 							redirected here
+	@ResponseBody // this annotation will say that the response is the body itself remove if the response is a jsp view
+	public String goToBukasan(){
+		return "IndexView";
+	}
+
+}
+ 
+
+```
+### Spring MVC View Resolvers
+
+File: dispatcher.xml
+For: Add bean for the viewer resolver. The dispatcher will automatically go to this after it receives a text from a controller (not annotated as a body). Then will go to the file with the text received (e.g. /WEB-INF/views/)
+```xml
+<beans xmlns="http://www.springframework.org/schema/beans"
+	    xmlns:context="http://www.springframework.org/schema/context"
+	    xmlns:mvc="http://www.springframework.org/schema/mvc"
+	    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	    <context:component-scan base-package="com.codingyogurt" />
+	
+		<bean 
+	       class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	       <property name="prefix"> // this parameter will be added at the beginning of the response from the controller
+	           <value>/WEB-INF/views/</value>
+	       </property>
+	       <property name="suffix"> // this parameter will also be added at the end of the response of the controller
+	           <value>.jsp</value>
+	       </property>
+		</bean>
+		
+	    <mvc:annotation-driven />
+	    
+</beans>
+```
+File: IndexLoginController.java
+For: Edited so that it will only return a text. This text is now will be sent to the dispatcher, dispatcher will then consult the view resolver and add the prefix and suffix.
+```java
+package com.codingyogurt;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class IndexLoginController {
+	@RequestMapping(value="/bukasan") 
+	public String goToBukasan(){
+		return "IndexView";
+	}
+
+}
+ 
+
+```
+### Adding logging framework for easier debugging. Adding log4j.
+File: pom.xml
+For: Adding the dependency in Maven so it will be automaticall downloaded. Under dependencies.
+```xml
+	<dependency>
+		<groupId>log4j</groupId>
+		<artifactId>log4j</artifactId>
+		<version>1.2.17</version>
+	</dependency>
+```
+File: main/resources/log4j.properties (to create)
+For: The properties file for log4j.
+```
+log4j.rootLogger=ERROR, Appender1, Appender2
+ 
+log4j.appender.Appender1=org.apache.log4j.ConsoleAppender
+log4j.appender.Appender1.layout=org.apache.log4j.PatternLayout
+log4j.appender.Appender1.layout.ConversionPattern=%-7p %d [%t] %c %x - %m%n
+```
