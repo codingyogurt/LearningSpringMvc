@@ -71,4 +71,53 @@ Note: first create folder WEB_INF
 </web-app>
 
 ```
+# Snippets for Spring MVC Setup
+
+### The dispatcher (front controller)
+
+File: pom.xml, under dependencies
+For: to add the Spring framework dependency. 
+```xml
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-webmvc</artifactId>
+		<version>4.2.2.RELEASE</version>
+	</dependency> 
+```
+File: dispatcher.xml
+For: for the Spring beans
+```xml
+<beans xmlns="http://www.springframework.org/schema/beans"
+	    xmlns:context="http://www.springframework.org/schema/context"
+	    xmlns:mvc="http://www.springframework.org/schema/mvc"
+	    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	    <context:component-scan base-package="com.codingyogurt" />
+	    <mvc:annotation-driven />
+	    
+</beans>
+```
+File: web.xml
+For: create and link the dispatcher servlet class to the dispatcher.xml. Also to create a mapping of the url that will catch all request having "/ryan-mvc/"
+```xml
+	<servlet>
+	        <servlet-name>spring-dispatcher</servlet-name>
+	        <servlet-class>
+	            org.springframework.web.servlet.DispatcherServlet
+	        </servlet-class>
+	        <init-param>
+	            <param-name>contextConfigLocation</param-name>
+	            <param-value>/WEB-INF/index-servlet-context.xml</param-value>
+	        </init-param>
+	        <load-on-startup>1</load-on-startup>
+	    </servlet>
+	
+	    <servlet-mapping>
+	        <servlet-name>spring-dispatcher</servlet-name>
+	        <url-pattern>/ryan-mvc/*</url-pattern>
+	    </servlet-mapping>
+```
 
