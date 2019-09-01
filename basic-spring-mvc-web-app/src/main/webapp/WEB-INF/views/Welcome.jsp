@@ -7,6 +7,6 @@
 <title>Welcome to BASIC APP</title>
 </head>
 <body>
-Welcome ${username} test
+Welcome ${username}
 </body>
 </html>

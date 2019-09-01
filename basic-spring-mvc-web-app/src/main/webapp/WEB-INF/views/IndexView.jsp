@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<form action="/index.do" method="post">
+<form action="/bukasan" method="post">
 
 Login to view Welcome! <br>
 ${indexMessage} <br>
