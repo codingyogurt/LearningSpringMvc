@@ -8,3 +8,4 @@ Me learning Spring MVC Framework for Java Web Development
     * Dispatcher (Front Controller)
     * Controllers
     * View Resolvers
+    * Models and @RequestParam
