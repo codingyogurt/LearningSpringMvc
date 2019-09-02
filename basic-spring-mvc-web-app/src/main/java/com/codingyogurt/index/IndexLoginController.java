@@ -1,5 +1,6 @@
-package com.codingyogurt;
+package com.codingyogurt.index;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class IndexLoginController {
+	
+	@Autowired
+	IndexLoginService indexLoginService;
 	
 	@RequestMapping(value="/bukasan", method = RequestMethod.GET)
 	public String goToBukasan(){
@@ -20,7 +24,6 @@ public class IndexLoginController {
 			@RequestParam String txtPassword,
 			ModelMap map) {
 		
-		IndexLoginService indexLoginService = new IndexLoginService();
 		
 		if(!indexLoginService.verifyUser(txtUsername, txtPassword)) {
 			map.put("indexMessage","Error Logging in.");
