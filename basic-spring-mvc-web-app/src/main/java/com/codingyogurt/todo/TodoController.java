@@ -6,8 +6,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
+@SessionAttributes("username")
 public class TodoController {
 	
 	@Autowired
@@ -16,7 +18,6 @@ public class TodoController {
 	@RequestMapping(value="/todos", method = RequestMethod.GET)
 	public String goToBukasan(ModelMap map){
 		map.addAttribute("todos", todoService.retrieveTodos("in28Minutes"));
-		map.addAttribute("username", todoService.retrieveTodos("in28Minutes").get(0).getUser());
 		return "TodosView";
 	}
 	

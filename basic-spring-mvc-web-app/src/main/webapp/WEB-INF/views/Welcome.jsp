@@ -7,6 +7,7 @@
 <title>Welcome to BASIC APP</title>
 </head>
 <body>
-Welcome ${username}
+Welcome ${username}! <br>
+Manage your Todos <a href="/todos">here</a>
 </body>
 </html>
