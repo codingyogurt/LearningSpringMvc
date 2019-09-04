@@ -9,5 +9,6 @@
 <body>
 Your Todos ${username}<br>
 ${todos}
+<a href="/addtodo">Add new</a>
 </body>
 </html>

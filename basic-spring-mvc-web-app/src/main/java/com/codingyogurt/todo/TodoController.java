@@ -1,5 +1,7 @@
 package com.codingyogurt.todo;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -12,13 +14,27 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes("username")
 public class TodoController {
 	
+	String username;
+	
 	@Autowired
 	TodoService todoService;
 	
 	@RequestMapping(value="/todos", method = RequestMethod.GET)
 	public String goToBukasan(ModelMap map){
-		map.addAttribute("todos", todoService.retrieveTodos("in28Minutes"));
+		username = (String) map.get("username");
+		map.addAttribute("todos", todoService.retrieveTodos(username));
 		return "TodosView";
+	}
+	
+	@RequestMapping(value = "/addtodo", method = RequestMethod.GET)
+	public String goToAddTodo(){
+		return "AddTodoView";
+	}
+	
+	@RequestMapping(value = "/addtodo", method = RequestMethod.POST)
+	public String processAddTodo(@RequestParam String desc){
+		todoService.addTodo(username, desc, new Date(), false);	
+		return "redirect:/todos";
 	}
 	
 }
