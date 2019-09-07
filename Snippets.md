@@ -261,3 +261,43 @@ For: adding the css and the scripts
     	<script src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </body>
 ```
+### Adding Entry Validations using Bean Binding (Server) and Hibernate Validor (Web)
+
+File: Object to validate
+For: Validation, add javax validation on the object that needs validation on a parameter before acceptance
+```java
+@Size(min = 10, message = "Enter atleast 10 Characters.")
+private static desc;
+```
+
+File: The JSP View
+For: Binding the object class to the form in jsp, this command is will be required everytime the page is loaded. So always add the attribute in the commandName the first you access this page.
+```html
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
+<form:form action="/add-todo" method="post" commandName="todo">
+	<fieldset class="form-group">
+		<form:label path="desc">Description</form:label>
+		<form:input path="desc" type="text" class="form-control" required="required"/>
+	</fieldset>
+	<form:errors path="desc" cssClass="text-warning" />
+</form:form>
+
+```
+
+File: controller with the post mapping
+For: Initializing the validation in the server
+```java
+@Valid Todo todo, BindingResult result
+```
+
+File: pom.xml
+For: Adding same functionality to the client. Adding Hibernate validator
+
+```xml
+<dependency>
+	<groupId>org.hibernate</groupId>
+	<artifactId>hibernate-validator</artifactId>
+	<version>5.0.2.Final</version>
+</dependency>
+``
