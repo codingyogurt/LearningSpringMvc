@@ -209,3 +209,95 @@ log4j.appender.Appender1=org.apache.log4j.ConsoleAppender
 log4j.appender.Appender1.layout=org.apache.log4j.PatternLayout
 log4j.appender.Appender1.layout.ConversionPattern=%-7p %d [%t] %c %x - %m%n
 ```
+### JSTL Tags for JSPs
+File: .jsp
+For: adding logic in a jsp view file
+```html
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:forEach items="${todoslist}" var="todo">
+	${todo.id} ${todo.desc} ${todo.user}
+<c:forEach>
+```
+File: pom.xml
+For: Dependency
+```xml
+	<dependency>
+	    <groupId>javax.servlet</groupId>
+	    <artifactId>jstl</artifactId>
+	    <version>1.2</version>
+	</dependency>
+```
+### Webjars for the UI, adding Bootstrap and Jquery (Required by bootstrap)
+File: pom.xml
+For: Depedency
+```xml
+	<dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>3.3.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>1.9.1</version>
+        </dependency>
+	
+```
+File: dispatcher.xml
+For: mapping all webjars request from jsp to webjars
+```xml
+<mvc:resources mapping="/webjars/**" location="/webjars/"/>
+```
+File: the JSP view file
+For: adding the css and the scripts
+```html
+<head>
+	<link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	<meta charset="UTF-8">
+	<title>TODOS</title>
+</head>
+
+	<script src="webjars/jquery/1.9.1/jquery.min.js"></script>
+    	<script src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</body>
+```
+### Adding Entry Validations using Bean Binding (Server) and Hibernate Validor (Web)
+
+File: Object to validate
+For: Validation, add javax validation on the object that needs validation on a parameter before acceptance
+```java
+@Size(min = 10, message = "Enter atleast 10 Characters.")
+private static desc;
+```
+
+File: The JSP View
+For: Binding the object class to the form in jsp, this command is will be required everytime the page is loaded. So always add the attribute in the commandName the first you access this page.
+```html
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
+<form:form action="/add-todo" method="post" commandName="todo">
+	<fieldset class="form-group">
+		<form:label path="desc">Description</form:label>
+		<form:input path="desc" type="text" class="form-control" required="required"/>
+	</fieldset>
+	<form:errors path="desc" cssClass="text-warning" />
+</form:form>
+
+```
+
+File: controller with the post mapping
+For: Initializing the validation in the server
+```java
+@Valid Todo todo, BindingResult result
+```
+
+File: pom.xml
+For: Adding same functionality to the client. Adding Hibernate validator
+
+```xml
+<dependency>
+	<groupId>org.hibernate</groupId>
+	<artifactId>hibernate-validator</artifactId>
+	<version>5.0.2.Final</version>
+</dependency>
+``
