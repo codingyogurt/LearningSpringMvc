@@ -1,5 +1,5 @@
 /home/codingyogurt/eclipse-workspace/LearningSpringMvc/basic-spring-mvc-web-app/src/main/java/com/codingyogurt/todo/TodoController.java
-/home/codingyogurt/eclipse-workspace/LearningSpringMvc/basic-spring-mvc-web-app/src/main/java/com/codingyogurt/todo/Todo.java
+/home/codingyogurt/eclipse-workspace/LearningSpringMvc/basic-spring-mvc-web-app/src/main/java/com/codingyogurt/todo/TodoItem.java
 /home/codingyogurt/eclipse-workspace/LearningSpringMvc/basic-spring-mvc-web-app/src/main/java/com/codingyogurt/index/IndexLoginService.java
 /home/codingyogurt/eclipse-workspace/LearningSpringMvc/basic-spring-mvc-web-app/src/main/java/com/codingyogurt/index/IndexLoginController.java
 /home/codingyogurt/eclipse-workspace/LearningSpringMvc/basic-spring-mvc-web-app/src/main/java/com/codingyogurt/todo/TodoService.java

@@ -2,15 +2,23 @@ package com.codingyogurt.todo;
 
 import java.util.Date;
 
-public class Todo {
+import javax.validation.constraints.Size;
+
+public class TodoItem {
 	private int id;
 	private String user;
+	
+	@Size(min = 10, message = "Please enter atleast 10 characters")
 	private String desc;
+	
 	private Date targetDate;
 	private boolean isDone;
 	
+	public TodoItem() {
+		
+	}
 	
-	public Todo(int id, String user, String desc, Date targetDate, boolean isDone) {
+	public TodoItem(int id, String user, String desc, Date targetDate, boolean isDone) {
 		super();
 		this.id = id;
 		this.user = user;
@@ -87,7 +95,7 @@ public class Todo {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Todo other = (Todo) obj;
+		TodoItem other = (TodoItem) obj;
 		if (id != other.id)
 			return false;
 		return true;

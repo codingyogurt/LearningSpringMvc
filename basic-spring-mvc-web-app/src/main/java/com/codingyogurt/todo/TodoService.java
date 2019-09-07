@@ -9,20 +9,20 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class TodoService {
-	private static List<Todo> todos = new ArrayList<Todo>();
+	private static List<TodoItem> todos = new ArrayList<TodoItem>();
 	private static int todoCount = 3;
 
 	static {
-		todos.add(new Todo(1, "ryan", "Learn Spring MVC", new Date(),
+		todos.add(new TodoItem(1, "ryan", "Learn Spring MVC", new Date(),
 				false));
-		todos.add(new Todo(2, "ryan", "Learn Struts", new Date(), false));
-		todos.add(new Todo(3, "ryan", "Learn Hibernate", new Date(),
+		todos.add(new TodoItem(2, "ryan", "Learn Struts", new Date(), false));
+		todos.add(new TodoItem(3, "ryan", "Learn Hibernate", new Date(),
 				false));
 	} 
 	
-	public List<Todo> retrieveTodos(String user) {
-		List<Todo> filteredTodos = new ArrayList<Todo>();
-		for (Todo todo : todos) {
+	public List<TodoItem> retrieveTodos(String user) {
+		List<TodoItem> filteredTodos = new ArrayList<TodoItem>();
+		for (TodoItem todo : todos) {
 			if (todo.getUser().equals(user))
 				filteredTodos.add(todo);
 		}
@@ -30,14 +30,14 @@ public class TodoService {
 	}
 	
 	public void addTodo(String name, String desc, Date targetDate, boolean isDone) {
-		todos.add(new Todo(++todoCount, name, desc, targetDate, isDone));
+		todos.add(new TodoItem(++todoCount, name, desc, targetDate, isDone));
 		System.out.println("added new todo");
 	}
 	
 	public void deleteTodo(int id) {
-		Iterator<Todo> iterator = todos.iterator();
+		Iterator<TodoItem> iterator = todos.iterator();
 		while (iterator.hasNext()) {
-			Todo todo = iterator.next();
+			TodoItem todo = iterator.next();
 			if (todo.getId() == id) {
 				iterator.remove();
 			}
