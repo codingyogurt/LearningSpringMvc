@@ -29,7 +29,10 @@
 						<td>${todoitem.desc }</td>
 						<td>${todoitem.targetDate }</td>
 						<td> ${todoitem.done }</td>
-						<td><a class="btn btn-danger" href="/deletetodo?id=${todoitem.id }">Delete</a></td>
+						<td>
+							<a class="btn btn-success" href="/updatetodo?id=${todoitem.id }">Update</a>
+							<a class="btn btn-danger" href="/deletetodo?id=${todoitem.id }">Delete</a>
+						</td>
 				
 					</tr>	
 					</j:forEach>

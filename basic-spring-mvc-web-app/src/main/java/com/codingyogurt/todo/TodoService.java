@@ -44,5 +44,18 @@ public class TodoService {
 		}
 	}
 	
+	public TodoItem retrieveTodo(int id) {
+		for (TodoItem todo : todos) {
+			if (todo.getId() == id)
+				return todo;
+		}
+		return null;
+	}
+
+	public void updateTodo(TodoItem todo) {
+		todos.remove(todo);
+		todos.add(todo);
+	}
+	
 
 }

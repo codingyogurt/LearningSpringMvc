@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,5 +55,27 @@ public class TodoController {
 		todoService.deleteTodo(id);
 		return "redirect:/todos";
 	}
+	
+	// redirection to update todo
+	@RequestMapping(value = "/updatetodo", method = RequestMethod.GET)
+	public String updateTodo(ModelMap model, @RequestParam int id){
+		model.addAttribute("todoItem", todoService.retrieveTodo(id));
+		return "AddTodoView";
+	}
+	
+	// sending post method to /updatetodo url
+	@RequestMapping(value = "/updatetodo", method = RequestMethod.POST)
+	public String updateTodo(ModelMap model, @Valid TodoItem todoItem, BindingResult result){
+		if(result.hasErrors()) {
+			return "AddTodoView";
+		}
+		todoItem.setUser((String) model.get("username"));
+		todoItem.setTargetDate(new Date());
+		todoService.updateTodo(todoItem);
+		
+		return "redirect:/todos";
+	}
+	
+	
 	
 }
