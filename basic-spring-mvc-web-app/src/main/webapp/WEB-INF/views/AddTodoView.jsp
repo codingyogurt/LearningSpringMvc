@@ -1,14 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<!DOCTYPE html>
-<html>
-<head>
-	<link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-	<meta charset="UTF-8">
-	<title>ADD TODO</title>
-</head>
-	<body>
+<%@include file="common/header.jspf" %>
+<%@include file="common/navigation.jspf" %>
 		<div class="container">
 	
 			<h1>Add your new Todo</h1>
@@ -33,8 +24,4 @@
 			</form:form>
 		
 		</div>
-		
-		<script src="webjars/jquery/1.9.1/jquery.min.js"></script>	
-	    <script src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-	</body>
-</html>
+<%@ include file="common/footer.jspf" %>	

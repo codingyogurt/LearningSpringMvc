@@ -1,24 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Login to BASIC APP</title>
-</head>
-<body>
+<%@include file="common/header.jspf" %>
 
 <form action="/bukasan" method="post">
-
-Login to view Welcome! <br>
-${indexMessage} <br>
-Username:
-<input type="text" name="txtUsername"/> <br>
-Password:
-<input type="password" name="txtPassword"/> <br>
-<input type="submit" value="Submit"/>
-
+	<div class="container">
+		<h1>Login to Todo Web App</h1>
+		<fieldset class="form-group">
+			<label>Username</label>
+			<input type="text" name="txtUsername"/>
+		</fieldset>
+		<fieldset class="form-group">
+			<label>Password</label>
+			<input type="password" name="txtPassword"/>
+		</fieldset>
+		<label class="text-warning">${indexMessage}</label><br>
+		<input class="btn btn-success" type="submit" value="Submit"/>
+	</div>
 </form>
 
-</body>
-</html>
+<%@ include file="common/footer.jspf" %>

@@ -1,13 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Welcome to BASIC APP</title>
-</head>
-<body>
-Welcome ${username}! <br>
-Manage your Todos <a href="/todos">here</a>
-</body>
-</html>
+<%@include file="common/header.jspf" %>
+<%@include file="common/navigation.jspf" %>
+
+<div class="container">
+	<h1>Welcome ${username}!</h1>
+	<label>Manage your Todos <a href="/todos">here</a></label>
+</div>
+
+<%@ include file="common/footer.jspf" %>
