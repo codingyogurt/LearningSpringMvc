@@ -344,3 +344,118 @@ File: IndexView.jsp
 
 <%@ include file="common/footer.jspf" %>
 ```
+### Adding Spring security
+File: pom.xml
+For: Spring security dependency
+```xml
+<dependency>
+	<groupId>org.springframework.security</groupId>
+	<artifactId>spring-security-web</artifactId>
+	<version>4.0.1.RELEASE</version>
+</dependency>
+
+<dependency>
+	<groupId>org.springframework.security</groupId>
+	<artifactId>spring-security-config</artifactId>
+	<version>4.0.1.RELEASE</version>
+</dependency>	
+```
+File: WebSecurityConfiguration.java
+For: Configuration of the Spring security mapping. Required by filter mapping.
+```java
+package com.in28minutes.security;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+	
+	//**
+	Accepting user 'ryan' with password, adding role USER and ADMIN if found
+	*/
+	@Autowired
+	public void configureGlobalSecurity(AuthenticationManagerBuilder auth)
+			throws Exception {
+		auth.inMemoryAuthentication().withUser("ryan").password("dummy")
+				.roles("USER", "ADMIN");
+	}
+	
+	//**
+	Checks all request for this mappings, "/" , allowing only access that has USER roles
+	*/
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests().antMatchers("/login").permitAll()
+				.antMatchers("/", "/*todo*/**").access("hasRole('USER')").and()
+				.formLogin();
+	}
+}
+```
+File: web.xml
+For: Filtering all "/" request to be passed in Spring security configuration first before the dispatcher.
+```xml
+<filter>
+	<filter-name>springSecurityFilterChain</filter-name>
+	<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+</filter>
+
+<filter-mapping>
+	<filter-name>springSecurityFilterChain</filter-name>
+	<url-pattern>/*</url-pattern>
+</filter-mapping>
+```
+File: todocontroller.java , any controller
+For: To make use of the authentication properties. Remove all hardcoding and session attributes of username.
+```java
+private String getLoggedInUserName(ModelMap model) {
+
+		//**
+		Get the principal object of the currenct authentication, this contains details of the authentication
+		*/
+		Object principal = SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+
+		//*
+		Checks if the principal has the user details we wanted. If yes, extract the username, If not, returns the
+		all to text for debugging.
+		*/
+		if (principal instanceof UserDetails)
+			return ((UserDetails) principal).getUsername();
+
+		return principal.toString();
+	}
+```
+File: navbar jsp
+For: adding logout functionality
+```xml
+<ul class="nav navbar-nav navbar-right">
+	<li><a href="/logout">Logout</a></li>
+</ul>
+```
+File: logoutcontroller.java
+For: request mapping of /logout. logout functionality
+```java
+@RequestMapping(value = "/logout", method = RequestMethod.GET)
+public String logout(HttpServletRequest request,
+		HttpServletResponse response) {
+	/*
+	gets the current authentication
+	*/
+	Authentication auth = SecurityContextHolder.getContext()
+			.getAuthentication();
+			
+	/*
+	logout the current authentication if authentication is not null
+	*/
+	if (auth != null) {
+		new SecurityContextLogoutHandler().logout(request, response, auth);
+	}
+	return "redirect:/";
+}
+```
