@@ -7,6 +7,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
@@ -19,10 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
-@SessionAttributes("username")
 public class TodoController {
 	
-	String username;
 	
 	@Autowired
 	TodoService todoService;
@@ -32,13 +32,23 @@ public class TodoController {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		webDataBinder.registerCustomEditor(Date.class, new CustomDateEditor(simpleDateFormat, false));
 	}
-	
+		
 	@RequestMapping(value="/todos", method = RequestMethod.GET)
 	public String goToBukasan(ModelMap model){
 		
-		username = (String) model.get("username");
-		model.addAttribute("todos", todoService.retrieveTodos(username));
+		model.addAttribute("todos", todoService.retrieveTodos(extractLoggedInUserName()));
 		return "TodosView";
+	}
+
+	private String extractLoggedInUserName() {
+		
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		if(principal instanceof UserDetails ) {
+			return ((UserDetails) principal).getUsername();
+		}
+		
+		return principal.toString();
 	}
 	
 	@RequestMapping(value = "/addtodo", method = RequestMethod.GET)
@@ -54,7 +64,7 @@ public class TodoController {
 			return "AddTodoView";
 		}
 		
-		todoService.addTodo(username, todo.getDesc(), todo.getTargetDate(), false);	
+		todoService.addTodo(extractLoggedInUserName(), todo.getDesc(), todo.getTargetDate(), false);	
 		model.clear();
 		return "redirect:/todos";
 	}

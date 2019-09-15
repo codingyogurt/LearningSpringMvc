@@ -1,11 +1,14 @@
 <nav role="navigation" class="navbar navbar-default">
 	<div class="">
-		<a href="/bukasan" class="navbar-brand">Todo Web App</a>	
+		<a href="/" class="navbar-brand">Todo Web App</a>	
 	</div>
 	<div class="navbar-collapse">
 		<ul class="nav 	navbar-nav">
-			<li><a href="/bukasan">Home</a></li>
+			<li><a href="/">Home</a></li>
 			<li><a href="/todos">Todos</a></li>
+		</ul>
+		<ul class="nav navbar-right navbar-nav">
+			<li> <a href="/logout">Logout</a> </li>
 		</ul>
 	</div>
 </nav>
