@@ -300,4 +300,47 @@ For: Adding same functionality to the client. Adding Hibernate validator
 	<artifactId>hibernate-validator</artifactId>
 	<version>5.0.2.Final</version>
 </dependency>
-``
+```
+### Using JSP Fragments for header, footer and navigation bar
+
+File: common/header.jspf
+For: Place here code part of the header in each JSP file. You can user this header file for every jsp files using include lib.
+
+```xml
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="j"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	<meta charset="UTF-8">
+	<title>Todo Web App</title>
+</head>
+<body>
+```
+File: IndexView.jsp
+```xml
+<%@include file="common/header.jspf" %>
+
+<form action="/bukasan" method="post">
+	<div class="container">
+		<h1>Login to Todo Web App</h1>
+		<fieldset class="form-group">
+			<label>Username</label>
+			<input type="text" name="txtUsername"/>
+		</fieldset>
+		<fieldset class="form-group">
+			<label>Password</label>
+			<input type="password" name="txtPassword"/>
+		</fieldset>
+		<label class="text-warning">${indexMessage}</label><br>
+		<input class="btn btn-success" type="submit" value="Submit"/>
+	</div>
+</form>
+
+<%@ include file="common/footer.jspf" %>
+```
