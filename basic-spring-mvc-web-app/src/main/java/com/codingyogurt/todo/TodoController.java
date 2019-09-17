@@ -53,8 +53,12 @@ public class TodoController {
 	
 	@RequestMapping(value = "/addtodo", method = RequestMethod.GET)
 	public String goToAddTodo(ModelMap model){
+		
+		
 		model.addAttribute("todoItem", new TodoItem()); 
+		
 		return "AddTodoView";
+		
 	}
 	
 	@RequestMapping(value = "/addtodo", method = RequestMethod.POST)
