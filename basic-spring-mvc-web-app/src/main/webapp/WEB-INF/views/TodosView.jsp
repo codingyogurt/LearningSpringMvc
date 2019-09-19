@@ -3,7 +3,9 @@
 
 	<div class="container">	
 		<table class="table table-striped">
-			<caption>Your todos ${username }</caption>
+			<caption>
+				<spring:message code="todo.caption"/>	${username }
+			</caption>
 		<thead>
 			<tr>
 				<th>ID</th>

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
-public class WelcomeController {
+public class WelcomeController {  
 	
 	
 	@RequestMapping(value="/", method = RequestMethod.GET)

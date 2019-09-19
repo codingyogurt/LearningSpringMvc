@@ -16,7 +16,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			throws Exception {
 		auth.inMemoryAuthentication().withUser("ryan").password("dummy")
 				.roles("USER", "ADMIN");
-	}
+	}  
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
